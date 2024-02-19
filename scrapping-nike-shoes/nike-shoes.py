@@ -25,7 +25,7 @@ def run(playwright):
     page.goto("https://www.nike.com/fr/w/chaussures-y7ok")
 
     # Démarre le défilement pendant 5 minutes
-    end_time = time.time() + 3 * 60
+    end_time = time.time() + 5 * 60
     while time.time() < end_time:
         page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
         page.wait_for_timeout(1000)  # Attente d'1 seconde entre les scrolls
