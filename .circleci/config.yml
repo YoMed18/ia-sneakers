@@ -1,9 +1,12 @@
 
+# This config was automatically generated from your source code
+# Stacks detected: cicd:github-actions:.github/workflows,deps:python:.
 version: 2.1
 orbs:
   python: circleci/python@2
 jobs:
   test-python:
+    # Install dependencies and run tests
     docker:
       - image: cimg/python:3.9-node
     steps:
