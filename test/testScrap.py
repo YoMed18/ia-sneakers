@@ -45,7 +45,8 @@ class TestScrapImages(unittest.TestCase):
 
         # Vérifier si `print` a été appelé avec le bon message
         mock_print.assert_any_call(
-            "Erreur lors du téléchargement de l'image https://exemple.com/image_invalide.jpg: Error message for testing")
+            "Erreur lors du téléchargement de l'image "
+            "https://exemple.com/image_invalide.jpg: Error message for testing")
 
 
 if __name__ == '__main__':
