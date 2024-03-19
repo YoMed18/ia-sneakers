@@ -5,6 +5,7 @@ import os
 import re
 
 
+# Fonction pour télécharger les images d'un site web
 def telecharger_toutes_images(url_page, nom_dossier):
     if not os.path.exists(nom_dossier):
         os.makedirs(nom_dossier)
@@ -35,12 +36,15 @@ def telecharger_toutes_images(url_page, nom_dossier):
         print(f"Erreur lors du téléchargement des images : {erreur}")
 
 
+# Fonction afin de netoyyer le nom du fichier
 def nettoyer_nom_fichier(nom):
-    nom = re.sub(r'[\\/:"*?<>|]+', "", nom)
+    nom = re.sub(r'[\\/:"*?<>|]+', "", nom) # Retirer les caractères non
+    # autorisés
     return unquote(nom)[:200]  # Limite la longueur pour éviter les erreurs sur les
     # systèmes de fichiers
 
 
+# Fonction afin de télécharger les images
 def telecharger_image(url, chemin_complet):
     try:
         response = requests.get(url, timeout=10)  # Ajout d'un timeout

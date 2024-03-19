@@ -4,7 +4,7 @@ import scrap.scrap as sp
 import requests
 
 
-class TestTelechargementImages(unittest.TestCase):
+class TestScrapImages(unittest.TestCase):
 
     @patch('scrap.scrap.os.path.exists')
     @patch('scrap.scrap.os.makedirs')
@@ -42,7 +42,6 @@ class TestTelechargementImages(unittest.TestCase):
         sp.telecharger_image("https://exemple.com/image_invalide.jpg",
                              "chemin/fichier.jpg")
 
-        # Check if print was called with a string containing the expected error message
         mock_print.assert_any_call(
             "Erreur lors du téléchargement de l'image "
             "https://exemple.com/image_invalide.jpg: Error message for testing")
