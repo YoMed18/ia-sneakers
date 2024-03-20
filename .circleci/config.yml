@@ -13,7 +13,7 @@ jobs:
       - run: pip install -r requirements.txt
       - run:
           name: Run tests
-          command: pytest /tests --cov
+          command: pytest tests/ --cov
   deploy:
     # This is an example deploy job, not actually used by the workflow
     docker:
