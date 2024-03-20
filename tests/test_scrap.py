@@ -47,7 +47,3 @@ class TestScrapImages(unittest.TestCase):
         mock_print.assert_any_call(
             "Erreur lors du téléchargement de l'image "
             "https://exemple.com/image_invalide.jpg: Error message for testing")
-
-
-if __name__ == '__main__':
-    unittest.main()
