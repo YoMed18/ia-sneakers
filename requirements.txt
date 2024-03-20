@@ -10,5 +10,5 @@ keyring~=23.5.0
 setuptools~=69.1.0
 beautifulsoup4~=4.12.3
 attrs~=23.2.0
-pandas~=2.2.0
+pandas~=1.3.5
 selenium~=4.18.1
