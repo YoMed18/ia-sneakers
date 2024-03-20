@@ -39,12 +39,13 @@ class TestScrapImages(unittest.TestCase):
             "Error message for testing")
         mock_get.return_value = mock_response
 
+        # Appeler la fonction sans essayer de catcher l'exception ici
         sp.telecharger_image("https://exemple.com/image_invalide.jpg",
                              "chemin/fichier.jpg")
 
+        # Vérifier si `print` a été appelé avec le bon message
         mock_print.assert_any_call(
-            "Erreur lors du téléchargement de l'image "
-            "https://exemple.com/image_invalide.jpg: Error message for testing")
+            "Erreur lors du téléchargement de l'image https://exemple.com/image_invalide.jpg: Error message for testing")
 
 
 if __name__ == '__main__':
