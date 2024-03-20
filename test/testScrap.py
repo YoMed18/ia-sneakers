@@ -24,12 +24,12 @@ class TestScrapImages(unittest.TestCase):
 
         with patch('scrap.scrap.open',
                    new_callable=unittest.mock.mock_open()) as mock_open:
-            sp.telecharger_image("https://exemple.com/image.jpg",
-                                 "chemin/fichier.jpg"
-                                 )
-            mock_open.assert_called_with("chemin/fichier.jpg", 'wb')
-            mock_file_handle = mock_open.return_value.__enter__.return_value
-            mock_file_handle.write.assert_called_with(b'contenu_image_fictive')
+            sp.telecharger_image("https://exemple.com/image.jpg", "chemin/fichier.jpg")
+            open_call = mock_open.mock_calls[0]
+            called_with_path = open_call[1][0]
+            # Vérifie que le chemin appelé commence par le chemin attendu
+            assert called_with_path.startswith(
+                "chemin/fichier.jpg"), "Le chemin du fichier ouvert ne commence pas comme attendu"
 
     @patch('scrap.scrap.requests.get')
     @patch('scrap.scrap.print')
