@@ -51,7 +51,8 @@ def convertir_en_jpg(chemin_image):
             if img.mode == 'RGBA':
                 fond_blanc = Image.new('RGB', img.size, 'WHITE')  # Fond blanc
                 fond_blanc.paste(img, (0, 0),
-                                 img)  # Utiliser img comme masque pour garder la transparence
+                                 img)  # Utiliser img comme masque pour garder la
+                # transparence
                 img = fond_blanc
             elif img.mode == 'LA' or (img.mode == 'P' and 'transparency' in img.info):
                 img = img.convert('RGB')
