@@ -1,0 +1,3 @@
+{
+    "réécritures" : [{ "source" : "/(.*)" , "destination" : "/api" }]
+}
