@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['AirMaxPlus', 'airForce1']
+
+roboflow:
+  workspace: test-modag
+  project: sneakers-ia
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/test-modag/sneakers-ia/dataset/3
