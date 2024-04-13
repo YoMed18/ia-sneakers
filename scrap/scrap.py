@@ -30,7 +30,8 @@ def telecharger_toutes_images(url_page, nom_dossier, callback=None):
             continue
 
         nom_fichier = nettoyer_nom_fichier(alt if alt else str(
-            time.time()))  # Utilise le temps comme nom de fichier si alt est vide
+            time.time())) 
+        # Utilise le temps comme nom de fichier si alt est vide
         chemin_complet = os.path.join(nom_dossier, nom_fichier)
 
         telecharger_image(src, chemin_complet, url_page)
@@ -47,14 +48,17 @@ def nettoyer_nom_fichier(nom):
 def convertir_en_jpg(chemin_image):
     try:
         with Image.open(chemin_image) as img:
-            # Si l'image est en mode RGBA (avec canal alpha), on crée un fond blanc
+            # Si l'image est en mode RGBA (avec canal alpha),
+            # on crée un fond blanc
             if img.mode == 'RGBA':
                 fond_blanc = Image.new('RGB', img.size, 'WHITE')  # Fond blanc
                 fond_blanc.paste(img, (0, 0),
-                                 img)  # Utiliser img comme masque pour garder la
+                                 img)  
+                # Utiliser img comme masque pour garder la
                 # transparence
                 img = fond_blanc
-            elif img.mode == 'LA' or (img.mode == 'P' and 'transparency' in img.info):
+            elif (img.mode == 'LA' or
+                  (img.mode == 'P' and 'transparency' in img.info)):
                 img = img.convert('RGB')
 
             chemin_sans_ext = os.path.splitext(chemin_image)[0]
@@ -87,22 +91,28 @@ def telecharger_image(url, chemin_complet, base_url=None):
             with open(nom_fichier_complet, 'wb') as fichier:
                 fichier.write(imgdata)
             print(
-                f"L'image encodée a été téléchargée et sauvegardée sous : {nom_fichier_complet}")
+                "L'image encodée a été téléchargée et sauvegardée sous : "
+                f"{nom_fichier_complet}"
+            )
 
             # Conversion en JPG si nécessaire
             if ext not in ['png', 'jpg', 'jpeg', 'svg']:
                 convertir_en_jpg(nom_fichier_complet)
 
         except binascii.Error as e:
-            print(f"Erreur lors du décodage de l'image encodée en base64 : {e}")
+            print(
+                f"Erreur lors du décodage de l'image encodée en base64 : {e}")
 
     else:
         if not url.startswith('http'):
-            url = urljoin(base_url, url)  # Conversion des URLs relatifs en absolus
+            url = urljoin(base_url, url)  
+            # Conversion des URLs relatifs en absolus
         ext = os.path.splitext(urlparse(url).path)[1][1:]
 
         # Générer un chemin complet avec un timestamp pour éviter les doublons
-        nom_fichier_complet = f"{chemin_complet}_{int(time.time())}.{ext if ext in ['png', 'jpg', 'jpeg', 'svg'] else 'jpg'}"
+        nom_fichier_complet = f"{chemin_complet}_{int(time.time())}."
+        extension = ext if ext in ['png', 'jpg', 'jpeg', 'svg'] else 'jpg'
+        nom_fichier_complet += f"{extension}"
 
         try:
             # Téléchargement de l'image
@@ -111,7 +121,9 @@ def telecharger_image(url, chemin_complet, base_url=None):
             with open(nom_fichier_complet, 'wb') as fichier:
                 fichier.write(response.content)
             print(
-                f"L'image a été téléchargée et sauvegardée sous : {nom_fichier_complet}")
+                "L'image a été téléchargée et sauvegardée sous : "
+                f"{nom_fichier_complet}"
+            )
 
             # Conversion en JPG si nécessaire
             if ext not in ['png', 'jpg', 'jpeg', 'svg']:
@@ -122,7 +134,9 @@ def telecharger_image(url, chemin_complet, base_url=None):
 
 
 if __name__ == "__main__":
-    url_page = input("Veuillez entrer l'URL de la page d'où télécharger les images : ")
-    nom_dossier = input("Veuillez entrer le nom du dossier dans lequel sauvegarder les "
-                        "images : ")
+    url_page = input(
+     "Veuillez entrer l'URL de la page d'où télécharger les images : ")
+    nom_dossier = input(
+     "Veuillez entrer le nom du dossier dans lequel sauvegarder les images :"
+                        )
     telecharger_toutes_images(url_page, nom_dossier)
