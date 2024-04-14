@@ -24,19 +24,25 @@ class TestScrapImages(unittest.TestCase):
 
         with patch('scrap.scrap.open',
                    new_callable=unittest.mock.mock_open()) as mock_open:
-            sp.telecharger_image("https://exemple.com/image.jpg", "chemin/fichier.jpg")
+            sp.telecharger_image(
+                "https://exemple.com/image.jpg",
+                "chemin/fichier.jpg"
+            )
+
             open_call = mock_open.mock_calls[0]
             called_with_path = open_call[1][0]
             # Vérifie que le chemin appelé commence par le chemin attendu
             assert called_with_path.startswith(
-                "chemin/fichier.jpg"), "Le chemin du fichier ouvert ne commence pas comme attendu"
+                "chemin/fichier.jpg"
+            ), "Le chemin du fichier ouvert ne commence pas comme attendu"
 
     @patch('scrap.scrap.requests.get')
     @patch('scrap.scrap.print')
     def test_erreur_telechargement_image(self, mock_print, mock_get):
         mock_response = MagicMock()
-        mock_response.raise_for_status.side_effect = requests.exceptions.HTTPError(
-            "Error message for testing")
+        mock_response.raise_for_status.side_effect = \
+            requests.exceptions.HTTPError("Error message for testing")
+
         mock_get.return_value = mock_response
 
         # Appeler la fonction sans essayer de catcher l'exception ici
@@ -46,7 +52,8 @@ class TestScrapImages(unittest.TestCase):
         # Vérifier si `print` a été appelé avec le bon message
         mock_print.assert_any_call(
             "Erreur lors du téléchargement de l'image "
-            "https://exemple.com/image_invalide.jpg: Error message for testing")
+            "https://exemple.com/image_invalide.jpg: Error message for testing"
+            )
 
     @patch('scrap.scrap.requests.get')
     @patch('scrap.scrap.telecharger_image')
@@ -55,8 +62,9 @@ class TestScrapImages(unittest.TestCase):
     @patch('scrap.scrap.nettoyer_nom_fichier', side_effect=lambda x: x)
     @patch('scrap.scrap.time.time',
            return_value=1234567890)
-    def test_telecharger_toutes_images(self, mock_time, mock_nettoyer, mock_makedirs,
-                                       mock_exists, mock_telecharger_image, mock_get):
+    def test_telecharger_toutes_images(self, mock_time, mock_nettoyer,
+                                       mock_makedirs, mock_exists,
+                                       mock_telecharger_image, mock_get):
         html_content = """
             <html>
                 <body>
@@ -106,7 +114,8 @@ class TestScrapImages(unittest.TestCase):
     @patch('scrap.scrap.os.remove')
     @patch('scrap.scrap.Image.new')
     @patch('scrap.scrap.print')
-    def test_conversion_avec_alpha(self, mock_print, mock_new, mock_remove, mock_open):
+    def test_conversion_avec_alpha(self, mock_print, mock_new,
+                                   mock_remove, mock_open):
         img_mock = MagicMock()
         img_mock.mode = 'RGBA'
         img_mock.convert.return_value = img_mock
