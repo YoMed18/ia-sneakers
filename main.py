@@ -8,6 +8,7 @@ import scrap.scrap as sp
 from fastapi import FastAPI, UploadFile, File
 
 from model.predict import predict_image
+from model.trainModel import train_model
 
 app = FastAPI()
 
@@ -28,6 +29,11 @@ app.add_middleware(
 class ScrapRequest(BaseModel):
     url: str
     folder_name: str
+
+
+class TrainingRequest(BaseModel):
+    data: str
+    epochs: int
 
 
 @app.get("/")
@@ -51,3 +57,12 @@ async def predict(image: UploadFile = File(...)):
     detected_objects = predict_image(content)
 
     return JSONResponse(content={"detected_objects": detected_objects})
+
+
+@app.post("/train/")
+async def train(training_request: TrainingRequest):
+    try:
+        train_model(training_request.data, training_request.epochs)
+        return {"message": "Le modèle a été entraîné en utilisant les données de {}".format(training_request.data)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
