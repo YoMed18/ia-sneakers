@@ -63,6 +63,8 @@ async def predict(image: UploadFile = File(...)):
 async def train(training_request: TrainingRequest):
     try:
         train_model(training_request.data, training_request.epochs)
-        return {"message": "Le modèle a été entraîné en utilisant les données de {}".format(training_request.data)}
+        return {"message": "Le modèle a été "
+                           "entraîné en utilisant les données "
+                           "de {}".format(training_request.data)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
