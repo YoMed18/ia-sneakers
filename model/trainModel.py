@@ -2,11 +2,12 @@ from ultralytics import YOLO
 
 model = YOLO('../yolov8n.pt')
 
-results = model.train(
-    data='../datatset/data.yaml',
-    epochs=200
-)
 
-results = model.val()
+def train_model(data, epochs):
+    results = model.train(
+        data=data,
+        epochs=epochs
+    )
+
 
 successes = model.export(format='onnx')
