@@ -4,12 +4,12 @@ import io
 
 
 class SimulatedYOLO:
-    def _init_(self, weights_path, mode):
+    def __init__(self, weights_path, mode):
         pass
 
-    def _call_(self, image):
+    def __call__(self, image):
         class SimulatedResult:
-            def _init_(self):
+            def __init__(self):
                 self.names = ["cat"]
 
         return [SimulatedResult()]
